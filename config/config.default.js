@@ -20,15 +20,7 @@ module.exports = appInfo => {
 
   // add your user config here
   const userConfig = {
-    mysql: {
-      client: {
-        host: '127.0.0.1',
-        port: '3306',
-        user: 'root',
-        password: 'weixiang1999',
-        database: 'bird_server',
-      },
-    },
+
   };
 
   return {
