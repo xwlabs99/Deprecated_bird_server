@@ -31,7 +31,7 @@ module.exports = {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       order_photo_id: INTEGER,
       order_type: ENUM('预定单', '正价', '套餐', '自来客'),
-      order_statu: ENUM('预定中', '待接受', '待跟进', '已跟进', '已完成', '已取消'),
+      order_status: ENUM('预定中', '待接受', '待跟进', '已跟进', '已完成', '已取消'),
       customer_name: STRING(20),
       customer_sex: ENUM('男', '女'),
       customer_phone: STRING(15),
