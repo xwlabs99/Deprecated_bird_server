@@ -10,12 +10,12 @@
 */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, ENUM, DATE } = Sequelize;
+    const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
     await queryInterface.createTable('bar_info', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       bar_name: STRING(50),
       location: STRING(20),
-      created_time: DATE,
+      created_time: { type: DATE, defaultValue: NOW },
       tips: STRING(50),
       type: ENUM('普通酒吧', '测试酒吧'),
       status: ENUM('运营中', '已停用'),

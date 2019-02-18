@@ -14,7 +14,7 @@
  */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, ENUM, DATE } = Sequelize;
+    const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
     await queryInterface.createTable('package_info', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       package_name: STRING(50),
@@ -23,7 +23,7 @@ module.exports = {
       type: ENUM('普通套餐'),
       status: ENUM('使用中', '已停用'),
       total_sale_number: INTEGER,
-      created_time: DATE,
+      created_time: { type: DATE, defaultValue: NOW },
       changed_time: DATE,
       photo_id: INTEGER,
     });

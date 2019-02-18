@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, INTEGER, DATE, NOW } = app.Sequelize;
 
   const Photo = app.model.define('user', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -10,7 +10,7 @@ module.exports = app => {
     key2: STRING(20),
     value2: STRING(20),
     path: STRING(100),
-    create_time: DATE,
+    create_time: { type: DATE, defaultValue: NOW },
   });
 
   return Photo;

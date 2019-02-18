@@ -26,7 +26,7 @@
 */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, ENUM, DATE } = Sequelize;
+    const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
     await queryInterface.createTable('order_info', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       order_photo_id: INTEGER,
@@ -43,17 +43,17 @@ module.exports = {
       bar_id: INTEGER,
       creater_id: INTEGER,
       saleperson_id: INTEGER,
-      create_time: DATE,
-      accept_time: DATE,
-      follow_time: DATE,
-      finish_time: DATE,
-      is_gootfeedback: ENUM('是', '否'),
+      created_time: { type: DATE, defaultValue: NOW },
+      accepted_time: DATE,
+      followed_time: DATE,
+      finished_time: DATE,
+      is_goodfeedback: ENUM('是', '否'),
       customer_comment: STRING(50),
       comment_tips: STRING(30),
     });
   },
 
-  down: queryInterface => {
-    queryInterface.dropTable('order_info');
+  down: async queryInterface => {
+    await queryInterface.dropTable('order_info');
   },
 };

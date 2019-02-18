@@ -10,7 +10,7 @@
  */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, DATE } = Sequelize;
+    const { INTEGER, STRING, DATE, NOW } = Sequelize;
     await queryInterface.createTable('img_info', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       key1: STRING(20),
@@ -18,11 +18,11 @@ module.exports = {
       key2: STRING(20),
       value2: STRING(20),
       path: STRING(100),
-      create_time: DATE,
+      created_time: { type: DATE, defaultValue: NOW },
     });
   },
 
   down: async queryInterface => {
-    queryInterface.dropTable('order_info');
+    queryInterface.dropTable('img_info');
   },
 };

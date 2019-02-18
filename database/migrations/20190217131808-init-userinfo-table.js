@@ -14,13 +14,13 @@
 */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, ENUM, DATE } = Sequelize;
+    const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
     await queryInterface.createTable('user_info', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       username: STRING(50),
       phone: STRING(15),
       phone_for_message: STRING(15),
-      created_time: DATE,
+      created_time: { type: DATE, defaultValue: NOW },
       idcard: STRING(20),
       idcard_photo_id: INTEGER,
       status: ENUM('审核中', '已通过', '禁止登录'),
