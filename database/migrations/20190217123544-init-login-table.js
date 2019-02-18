@@ -9,15 +9,17 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING } = Sequelize;
-    await queryInterface.createTable('login_info', {
+    await queryInterface.createTable('logins', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       phone: STRING(13),
       password: STRING(50),
       userinfo_id: INTEGER,
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
   },
 
   down: async queryInterface => {
-    await queryInterface.dropTable('login_info');
+    await queryInterface.dropTable('logins');
   },
 };

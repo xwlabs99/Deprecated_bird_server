@@ -8,7 +8,7 @@ class HomeController extends Controller {
     const { ctx } = this;
     const Result = await MysqlClient.query('insert into user_info (username) values ("weixiang")');
     ctx.body = Result;
-    console.log(Result);
+    console.log(ctx.query);
   }
 }
 

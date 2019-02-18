@@ -3,7 +3,7 @@
 module.exports = app => {
   const { STRING, INTEGER, ENUM, DATE, NOW } = app.Sequelize;
 
-  const Package = app.model.define('user', {
+  const Package = app.model.define('package', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     package_name: STRING(50),
     package_price: INTEGER,

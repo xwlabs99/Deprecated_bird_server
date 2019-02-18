@@ -11,7 +11,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING, DATE, NOW } = Sequelize;
-    await queryInterface.createTable('img_info', {
+    await queryInterface.createTable('images', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       key1: STRING(20),
       value1: STRING(20),
@@ -19,10 +19,12 @@ module.exports = {
       value2: STRING(20),
       path: STRING(100),
       created_time: { type: DATE, defaultValue: NOW },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
   },
 
   down: async queryInterface => {
-    queryInterface.dropTable('img_info');
+    queryInterface.dropTable('images');
   },
 };

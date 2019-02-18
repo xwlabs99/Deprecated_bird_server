@@ -15,7 +15,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
-    await queryInterface.createTable('package_info', {
+    await queryInterface.createTable('packages', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       package_name: STRING(50),
       package_price: INTEGER,
@@ -26,10 +26,12 @@ module.exports = {
       created_time: { type: DATE, defaultValue: NOW },
       changed_time: DATE,
       photo_id: INTEGER,
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
   },
 
   down: async queryInterface => {
-    await queryInterface.dropTable('package_info');
+    await queryInterface.dropTable('packages');
   },
 };

@@ -3,7 +3,7 @@
 module.exports = app => {
   const { STRING, INTEGER, DATE, ENUM, NOW } = app.Sequelize;
 
-  const Order = app.model.define('user', {
+  const Order = app.model.define('order', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     order_photo_id: INTEGER,
     order_type: ENUM('预定单', '正价', '套餐', '自来客'),

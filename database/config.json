@@ -9,11 +9,11 @@
   "test": {
     "username": "root",
     "password": "weixiang1999",
-    "database": "bird_server",
+    "database": "bird_server_unittest",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
-
+  
   }
 }

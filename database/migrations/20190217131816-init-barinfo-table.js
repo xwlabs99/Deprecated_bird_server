@@ -11,7 +11,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
-    await queryInterface.createTable('bar_info', {
+    await queryInterface.createTable('bars', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       bar_name: STRING(50),
       location: STRING(20),
@@ -19,10 +19,12 @@ module.exports = {
       tips: STRING(50),
       type: ENUM('普通酒吧', '测试酒吧'),
       status: ENUM('运营中', '已停用'),
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
   },
 
   down: async queryInterface => {
-    await queryInterface.dropTable('bar_info');
+    await queryInterface.dropTable('bars');
   },
 };
