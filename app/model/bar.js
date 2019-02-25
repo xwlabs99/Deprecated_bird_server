@@ -10,7 +10,7 @@ module.exports = app => {
     created_time: { type: DATE, defaultValue: NOW },
     tips: STRING(50),
     type: ENUM('普通酒吧', '测试酒吧'),
-    status: ENUM('运营中', '已停用'),
+    status: ENUM('未开放', '运营中', '已停用'),
   });
 
   return Bar;
