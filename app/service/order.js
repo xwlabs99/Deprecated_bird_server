@@ -1,4 +1,3 @@
-'use strict';
 const Service = require('egg').Service;
 
 class OrderService extends Service {
@@ -9,18 +8,26 @@ class OrderService extends Service {
     return order.dataValues.id;
   }
   //  根据特定属性 filter:object attributes:array
-  async getOrderInfo(filter, attributesArray) {
+  async getOrderInfo(filter, attributesArray = []) {
     const ctx = this.ctx;
-    const orderInfo = ctx.model.Order.findAll({
-      where: { ...filter },
-      attributes: attributesArray,
-    });
+    let orderInfo;
+
+    if (attributesArray.length === 0) {
+      orderInfo = await ctx.model.Order.findAll({
+        where: { ...filter },
+      });
+    } else {
+      orderInfo = await ctx.model.Order.findAll({
+        where: { ...filter },
+        attributes: attributesArray,
+      });
+    }
     // console.log(userInfo);
     return orderInfo;
   }
   async updateOrderinfo(filter, attributesObject) {
     const ctx = this.ctx;
-    const update = ctx.model.Order.update(attributesObject, { where: filter });
+    const update = await ctx.model.Order.update(attributesObject, { where: filter });
     return update;
   }
 }

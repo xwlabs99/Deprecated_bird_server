@@ -1,8 +1,7 @@
-'use strict';
 const Service = require('egg').Service;
 
 class LoginService extends Service {
-  async createBarinfo(body) {
+  async createLogininfo(body) {
     const ctx = this.ctx;
     const login = await ctx.model.Login.create(body);
     // console.log(user.dataValues.id);
@@ -10,18 +9,17 @@ class LoginService extends Service {
   }
   //  根据特定属性 filter:object attributes:array
   // 需要加过滤器,对NULL等空信息进行处理
-  async getBarInfo(filter, attributesArray) {
+  async getLoginInfo(filter) {
     const ctx = this.ctx;
-    const loginInfo = ctx.model.Login.findAll({
+    const loginInfo = await ctx.model.Login.findOne({
       where: { ...filter },
-      attributes: attributesArray,
     });
     // console.log(userInfo);
     return loginInfo;
   }
-  async updateBarinfo(filter, attributesObject) {
+  async updateLogininfo(filter, attributesObject) {
     const ctx = this.ctx;
-    const update = ctx.model.Login.update(attributesObject, { where: filter });
+    const update = await ctx.model.Login.update(attributesObject, { where: filter });
     return update;
   }
 }

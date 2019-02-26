@@ -1,4 +1,3 @@
-'use strict';
 /*
 用户信息表 user_info
 （1）主键ID id INT

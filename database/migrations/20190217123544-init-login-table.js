@@ -1,4 +1,4 @@
-'use strict';
+
 /*
  用户登录账号密码表 login_info
 （1）主键ID id INT

@@ -1,4 +1,3 @@
-'use strict';
 const Service = require('egg').Service;
 
 class PackageService extends Service {
@@ -9,18 +8,27 @@ class PackageService extends Service {
     return packageInfo.dataValues.id;
   }
   //  根据特定属性 filter:object attributes:array
-  async getPackageInfo(filter, attributesArray) {
+  async getPackageInfo(filter, attributesArray = []) {
     const ctx = this.ctx;
-    const packageInfo = ctx.model.Package.findAll({
-      where: { ...filter },
-      attributes: attributesArray,
-    });
+
+    let packageInfo;
+    if (attributesArray.length === 0) {
+      packageInfo = await ctx.model.Package.findAll({
+        where: { ...filter },
+        attributes: attributesArray,
+      });
+    } else {
+      packageInfo = await ctx.model.Package.findAll({
+        where: { ...filter },
+      });
+    }
+
     // console.log(userInfo);
     return packageInfo;
   }
   async updatePackageinfo(filter, attributesObject) {
     const ctx = this.ctx;
-    const update = ctx.model.Package.update(attributesObject, { where: filter });
+    const update = await ctx.model.Package.update(attributesObject, { where: filter });
     return update;
   }
 }

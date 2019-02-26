@@ -1,4 +1,3 @@
-'use strict';
 /*
 3．酒吧信息表
 （1）主键ID bar_id INT
@@ -18,7 +17,7 @@ module.exports = {
       created_time: { type: DATE, defaultValue: NOW },
       tips: STRING(50),
       type: ENUM('普通酒吧', '测试酒吧'),
-      status: ENUM('运营中', '已停用'),
+      status: ENUM('未开放', '运营中', '已停用'),
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

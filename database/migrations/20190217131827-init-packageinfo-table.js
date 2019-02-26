@@ -1,4 +1,3 @@
-'use strict';
 /**
  4．套餐数据表
 （1）套餐ID id INT

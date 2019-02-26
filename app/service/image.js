@@ -1,4 +1,3 @@
-'use strict';
 const Service = require('egg').Service;
 
 class ImageService extends Service {
@@ -10,18 +9,17 @@ class ImageService extends Service {
   }
   //  根据特定属性 filter:object attributes:array
   // 需要加过滤器,对NULL等空信息进行处理
-  async getImageInfo(filter, attributesArray) {
+  async getImageInfo(filter) {
     const ctx = this.ctx;
-    const imageInfo = ctx.model.Image.findAll({
+    const imageInfo = await ctx.model.Image.findAll({
       where: { ...filter },
-      attributes: attributesArray,
     });
     // console.log(userInfo);
     return imageInfo;
   }
   async updateImageinfo(filter, attributesObject) {
     const ctx = this.ctx;
-    const update = ctx.model.Image.update(attributesObject, { where: filter });
+    const update = await ctx.model.Image.update(attributesObject, { where: filter });
     return update;
   }
 }

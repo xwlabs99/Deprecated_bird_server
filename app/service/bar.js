@@ -1,4 +1,3 @@
-'use strict';
 const Service = require('egg').Service;
 
 class BarService extends Service {
@@ -12,12 +11,19 @@ class BarService extends Service {
   }
   //  根据特定属性 filter:object attributes:array
   // 需要加过滤器,对NULL等空信息进行处理
-  async getBarInfo(filter, attributesArray) {
+  async getBarInfo(filter, attributesArray = []) {
     const ctx = this.ctx;
-    const barInfo = ctx.model.Bar.findAll({
-      where: { ...filter },
-      attributes: attributesArray,
-    });
+    let barInfo;
+    if (attributesArray.length === 0) {
+      barInfo = await ctx.model.Bar.findAll({
+        where: { ...filter },
+      });
+    } else {
+      barInfo = await ctx.model.Bar.findAll({
+        where: { ...filter },
+        attributes: attributesArray,
+      });
+    }
     // console.log(userInfo);
     return barInfo;
   }

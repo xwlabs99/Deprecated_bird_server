@@ -1,4 +1,3 @@
-'use strict';
 /*
 订单数据表
 （1）订单ID  id INT
