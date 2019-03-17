@@ -1,14 +1,18 @@
-'use strict';
-
 const Controller = require('egg').Controller;
 
 class HomeController extends Controller {
   async index() {
-    const MysqlClient = this.app.mysql;
     const { ctx } = this;
-    const Result = await MysqlClient.query('insert into user_info (username) values ("weixiang")');
-    ctx.body = Result;
-    console.log(ctx.query);
+    //const attributesArray = ctx.queries.attributes || [];
+    //delete ctx.queries.attributes;// 去掉queries属性
+    //const filter = { ...ctx.queries };
+    console.log(ctx.request.body);
+    ctx.body = 'hello';
+  }
+  async post() {
+    const { ctx } = this;
+    console.log(ctx.request.body);
+    ctx.body = 'hello';
   }
 }
 

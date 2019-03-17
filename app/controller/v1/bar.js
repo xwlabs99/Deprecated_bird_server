@@ -1,17 +1,18 @@
 const Controller = require('egg').Controller;
 const createRule = {
-  username: 'string',
-  phone: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/ },
-  phone_for_message: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/ },
-  idcard: { type: 'string', max: 18, min: 18 },
-  user_type: { type: 'enum', values: [ '管理员', '区域经理', '客服人员', '销售员' ] },
-  bar_id: 'string',
+  id: 'int',
+  bar_name: 'string',
+  location: 'string',
+  tips: 'string',
+  type: { type: 'enum', values: [ '普通酒吧', '测试酒吧' ] },
+  status: { type: 'enum', values: [ '未开放', '运营中', '已停用' ] },
 };
 
 class UserController extends Controller {
   // POST
   async create() {
     const ctx = this.ctx;
+    ctx.request.body.data.tips = ctx.request.body.data.tips || '无';
     ctx.validate(createRule, ctx.request.body.data);
     const id = await ctx.service.user.createUserinfo(ctx.request.body.data);
     console.log(id);
