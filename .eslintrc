@@ -1,4 +1,7 @@
 {
   "extends": "eslint-config-egg",
-  "parserOptions":{"ecmaVersion":6,"sourceType":"module","ecmaFeatures":{"jsx":true,"experimentalObjectRestSpread":true,"modules":true}}
+  "parserOptions":{"ecmaVersion":6,"sourceType":"module","ecmaFeatures":{"jsx":true,"experimentalObjectRestSpread":true,"modules":true}},
+  "rules":{
+    "linebreak-style": "off",
+  }
 }
