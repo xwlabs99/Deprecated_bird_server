@@ -1,4 +1,14 @@
 const Controller = require('egg').Controller;
+/*
+接口格式
+{
+  status: 0,
+  message: "",
+  data: {
+    ...
+  }
+}
+*/
 const createRule = {
   username: 'string',
   phone: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/ },
@@ -13,22 +23,37 @@ class UserController extends Controller {
   async create() {
     const ctx = this.ctx;
     ctx.validate(createRule, ctx.request.body.data);
-    const id = await ctx.service.user.createUserinfo(ctx.request.body.data);
-    console.log(id);
-    const responseBody = {
-      status: 1,
-      message: '创建成功',
-      data: {
-        id,
-      },
-    };
-    ctx.body = responseBody;
-    ctx.status = 200;
+    const check = await ctx.service.user.getUserInfo({ phone: ctx.request.body.data.phone }, [ 'id' ]);
+    if (check.length === 0) {
+      const id = await ctx.service.user.createUserinfo(ctx.request.body.data);
+      const responseBody = {
+        status: 1,
+        message: '创建成功',
+        data: {
+          id,
+        },
+      };
+      ctx.body = responseBody;
+      ctx.status = 200;
+    } else {
+      const responseBody = {
+        status: 0,
+        message: '创建失败，该手机号已经被使用',
+      };
+      ctx.body = responseBody;
+      ctx.status = 200;
+    }
   }
   // GET
+  /*
+  queries{
+    attrbutes:[],
+    name: 'weixiang',
+    phone: '15301660251'
+  }
+  */
   async show() {
     const ctx = this.ctx;
-
     const attributesArray = ctx.queries.attributes || [];
     delete ctx.queries.attributes;// 去掉queries属性
     const filter = { ...ctx.queries };
@@ -58,7 +83,7 @@ class UserController extends Controller {
     const attributesObject = { status: '禁止登录' };
     const filter = ctx.body.data.filter;
     const affectedRows = await ctx.service.user.updateUserinfo(filter, attributesObject);
-    ctx.body = affectedRows;
+    ctx.body = { status: 1, data: affectedRows };
     ctx.status = 200;
   }
 

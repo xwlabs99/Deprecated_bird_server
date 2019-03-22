@@ -1,7 +1,7 @@
 const Service = require('egg').Service;
 
 class OrderService extends Service {
-  async createOrderinfo(body) {
+  async createOrderInfo(body) {
     const ctx = this.ctx;
     const order = await ctx.model.Order.create({ ...body });
     // console.log(user.dataValues.id);
@@ -23,9 +23,9 @@ class OrderService extends Service {
       });
     }
     // console.log(userInfo);
-    return orderInfo;
+    return orderInfo.map(item => item.dataValues);
   }
-  async updateOrderinfo(filter, attributesObject) {
+  async updateOrderInfo(filter, attributesObject) {
     const ctx = this.ctx;
     const update = await ctx.model.Order.update(attributesObject, { where: filter });
     return update;

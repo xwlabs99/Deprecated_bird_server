@@ -1,6 +1,5 @@
 /* eslint valid-jsdoc: "off" */
 
-'use strict';
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -33,7 +32,9 @@ module.exports = appInfo => {
       dialect: 'mysql',
       host: '127.0.0.1',
       port: 3306,
-      database: 'bird_server',
+      database: 'bird_server_unittest',
+      user: 'root',
+      password: 'weixiang1999',
     },
   };
 

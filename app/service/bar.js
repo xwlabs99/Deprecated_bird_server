@@ -1,7 +1,7 @@
 const Service = require('egg').Service;
 
 class BarService extends Service {
-  async createBarinfo(body) {
+  async createBarInfo(body) {
     const ctx = this.ctx;
     const { bar_name, location, tips, type } = body;
     const status = '未开放';
@@ -25,9 +25,9 @@ class BarService extends Service {
       });
     }
     // console.log(userInfo);
-    return barInfo;
+    return barInfo.map(item => item.dataValues);
   }
-  async updateBarinfo(filter, attributesObject) {
+  async updateBarInfo(filter, attributesObject) {
     const ctx = this.ctx;
     const update = ctx.model.Bar.update(attributesObject, { where: filter });
     return update;

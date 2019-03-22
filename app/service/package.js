@@ -1,7 +1,7 @@
 const Service = require('egg').Service;
 
 class PackageService extends Service {
-  async createPackageinfo(body) {
+  async createPackageInfo(body) {
     const ctx = this.ctx;
     const packageInfo = await ctx.model.Package.create({ ...body });
     // console.log(user.dataValues.id);
@@ -15,18 +15,18 @@ class PackageService extends Service {
     if (attributesArray.length === 0) {
       packageInfo = await ctx.model.Package.findAll({
         where: { ...filter },
-        attributes: attributesArray,
       });
     } else {
       packageInfo = await ctx.model.Package.findAll({
         where: { ...filter },
+        attributes: attributesArray,
       });
     }
 
     // console.log(userInfo);
-    return packageInfo;
+    return packageInfo.map(item => item.dataValues);
   }
-  async updatePackageinfo(filter, attributesObject) {
+  async updatePackageInfo(filter, attributesObject) {
     const ctx = this.ctx;
     const update = await ctx.model.Package.update(attributesObject, { where: filter });
     return update;
