@@ -2,7 +2,8 @@ const Controller = require('egg').Controller;
 const createRule = {
   order_photo_id: 'int',
   order_type: { type: 'enum', values: [ '预定单', '正价', '套餐', '自来客' ] },
-  order_status: { type: 'enum', values: [ '预定中', '待接受', '待跟进', '已跟进', '已完成', '已取消', '待修改' ] },
+  requireType: { type: 'enum', values: [ '卡座', '吧台', '包房', '散台' ] },
+  order_status: { type: 'enum', values: [ '预定中', '待接受', '待跟进', '已跟进', '已完成', '已取消', '待修改', '已修改' ] },
   pay_methon: { type: 'enum', values: [ '线上购买', '线下购买' ] },
   customer_name: 'string',
   customer_sex: { type: 'enum', values: [ '男', '女' ] },

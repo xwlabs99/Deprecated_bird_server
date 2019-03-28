@@ -12,18 +12,20 @@
 （）备注2 tips2 VARCHAR
 （）是否已经拨打电话 is_phoned ENUM（是，否）
 （）客户是否到店 is_arrived ENUM（是，否）
+（）是否好评 is_goodfeedback ENUM（是，否）
 （）消费套餐ID package_id INT
 （）实际消费额 consumption INT
-（）订单所属酒吧 barid INT
+（）订单所属酒吧 barid INT 添加索引
 （）创建人ID creater_id INT
 （）接单人ID saleperson_id INT
-（）创建时间 create_time DATE
-（）接单时间 accept_time DATE
-（）跟进时间 follow_time DATE
-（）完成时间 finish_time DATE
+（）创建时间 created_time DATE 添加索引
+（）接单时间 accepted_time DATE
+（）跟进时间 followed_time DATE
+（）完成时间 finished_time DATE
 （）客户评价 customer_comment VARCHAR
 （）评价备注 comment_tips VARCHAR
 */
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;

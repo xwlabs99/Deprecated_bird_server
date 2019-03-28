@@ -3,7 +3,7 @@
 （1）套餐ID id INT
 （2）套餐名称 package_name VARCHAR
 （3）套餐价格 package_price INT
-（4）所属门店 bar_id INT
+（4）所属门店 bar_id INT 添加索引
 （5）套餐状态 status ENUM（使用中，已停用）
 （6）套餐类型 type ENUM
 （7）套餐消费次数 total_sale_number INT
@@ -16,6 +16,7 @@ module.exports = {
     const { INTEGER, STRING, ENUM, DATE, NOW } = Sequelize;
     await queryInterface.createTable('packages', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      bar_id: INTEGER,
       package_name: STRING(50),
       package_price: INTEGER,
       tips: STRING(50),

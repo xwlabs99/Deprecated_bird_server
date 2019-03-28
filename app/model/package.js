@@ -5,6 +5,7 @@ module.exports = app => {
 
   const Package = app.model.define('package', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    bar_id: INTEGER,
     package_name: STRING(50),
     package_price: INTEGER,
     tips: STRING(50),

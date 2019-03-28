@@ -24,6 +24,8 @@ module.exports = appInfo => {
       host: '127.0.0.1',
       port: 3306,
       database: 'bird_server',
+      user: 'root',
+      password: 'weixiang1999',
     },
     mysql: {
       client: {
