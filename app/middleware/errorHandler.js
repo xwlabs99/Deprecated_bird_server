@@ -12,13 +12,22 @@ module.exports = () => {
       const error = status === 500 && ctx.app.config.env === 'prod'
         ? 'Internal Server Error'
         : err.message;
-
       // 从 error 对象上读出各个属性，设置到响应中
-      ctx.body = { error };
       if (status === 422) {
-        ctx.body.detail = err.errors;
+        ctx.body = {
+          status: 0,
+          message: '参数出错',
+          error: err.errors,
+        };
+        ctx.status = status;
+      } else {
+        ctx.body = {
+          status: 0,
+          message: err.errors,
+          error,
+        };
+        ctx.status = status;
       }
-      ctx.status = status;
     }
   };
 };

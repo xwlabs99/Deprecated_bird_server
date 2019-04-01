@@ -1,29 +1,27 @@
-/* eslint valid-jsdoc: "off" */
 
-
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
 module.exports = appInfo => {
-  /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
-  const config = {};
 
-  // use for cookie sign key, should change to your own and keep security
+  const config = {};
   config.keys = appInfo.name + '_1550213086228_1468';
+  config.jwtKey = 'weixiang1999';
 
   // add your middleware config here
-  config.middleware = [];
-
+  config.middleware = [ 'checkAuthority', 'parseJWT', 'errorHandler' ];
   // add your user config here
+  config.parseJWT = {
+    match: '/api',
+  };
+  config.checkAuthority = {
+    match: '/api/v1',
+  };
   const userConfig = {
     sequelize: {
       dialect: 'mysql',
       host: '127.0.0.1',
       port: 3306,
       database: 'bird_server',
+      user: 'root',
+      password: 'weixiang1999',
     },
     mysql: {
       client: {
@@ -35,7 +33,12 @@ module.exports = appInfo => {
       },
     },
   };
-
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true,
+    },
+  };
   return {
     ...config,
     ...userConfig,

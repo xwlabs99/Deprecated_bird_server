@@ -6,9 +6,9 @@ class HomeController extends Controller {
     // const attributesArray = ctx.queries.attributes || [];
     // delete ctx.queries.attributes;// 去掉queries属性
     // const filter = { ...ctx.queries };
-    console.log(ctx.request.body);
-    ctx.app.wechat.friends.add();
-    ctx.body = 'hello';
+    // console.log(ctx.request.body);
+    // ctx.app.wechat.friends.add();
+    ctx.body = ctx.request.body;
   }
   async post() {
     const { ctx } = this;

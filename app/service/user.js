@@ -4,10 +4,11 @@ class UserService extends Service {
   async createUserInfo(body) {
     const ctx = this.ctx;
     const { username, phone, phone_for_message, idcard, user_type, bar_id } = body;
-    const { password } = body;
+    const password = ctx.helper.md5(body.password);
     const status = '审核中';
     const user = await ctx.model.User.create({ username, status, phone, phone_for_message, idcard, user_type, bar_id });
-    await ctx.model.Login.create({ phone, password, userinfo_id: user });
+    console.log(user);
+    await ctx.model.Login.create({ phone, password, userinfo_id: user.id });
     // console.log(user.dataValues.id);
     return user.dataValues.id;
   }

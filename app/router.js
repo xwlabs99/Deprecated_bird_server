@@ -4,10 +4,11 @@
 
 module.exports = app => {
   const { router, controller } = app;
-  app.once('server', app.wechat.init);
+  // app.once('server', app.wechat.init);
   router.get('/', controller.home.index);
+  router.get('/api', controller.home.index);
   router.post('/login', controller.v1.login.login);
-
+  router.post('/register', controller.v1.login.register);
   // RESTful API
   router.resources('users', '/api/v1/user', controller.v1.user);
   // router.resources('bars', '/api/v1/bar', controller.v1.bar);

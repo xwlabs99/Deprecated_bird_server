@@ -15,7 +15,7 @@ class LoginService extends Service {
       where: { ...filter },
     });
     // console.log(userInfo);
-    return loginInfo.map(item => item.dataValues);
+    return loginInfo;
   }
   async updateLogininfo(filter, attributesObject) {
     const ctx = this.ctx;

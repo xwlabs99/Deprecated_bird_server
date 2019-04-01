@@ -1,39 +1,68 @@
 const Controller = require('egg').Controller;
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
 const createRule = {
   username: { type: 'string', required: true },
-  customer_phone: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/, required: true },
+  phone: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/, required: true },
   phone_for_message: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/, required: true },
   password: { type: 'string' },
-  idcard: { type: 'string', min: 18, max: 18 },
-  bar_id: { type: 'int' },
+  idcard: { type: 'string' },
+  bar_id: { type: 'string', format: /^[0-9]*$/, required: true },
+  user_type: { type: 'enum', values: [ '管理员', '区域经理', '门店客服', '销售员' ] },
 };
 class LoginController extends Controller {
   // POST
   async login() {
     const ctx = this.ctx;
-    const { phone, password } = this.ctx.request.body.data;
-    const info = ctx.service.login.getLoginInfo({
+    const { phone } = ctx.request.body.data;
+    const password = ctx.helper.md5(ctx.request.body.data.password);
+    const loginInfo = await ctx.service.login.getLoginInfo({
       phone,
       password,
     });
+    const [ userInfo ] = await ctx.service.user.getUserInfo({ id: loginInfo.userinfo_id }, [ 'id', 'phone', 'phone_for_message', 'status', 'user_type', 'bar_id' ]);
+    const token = jwt.sign(userInfo, this.app.config.jwtKey);
+
+    if (loginInfo === null) {
+      ctx.body = {
+        status: 0,
+        message: '用户名或密码错误',
+      };
+    } else if (userInfo.status === '审核中') {
+      ctx.body = {
+        status: 0,
+        message: '账号正在审核中',
+      };
+    } else {
+      ctx.body = {
+        status: 1,
+        message: '登录成功',
+        data: { token },
+      };
+    }
     // 登录
-    ctx.body = {
-      status: 1,
-      message: '登陆成功',
-      data: info,
-    };
-    ctx.status = 200;
   }
 
   async register() {
     const ctx = this.ctx;
-    const { phone, name, password } = ctx;
-    const salt = '(!%&88hsdh@qo*)#ausshds9';
-    const md5 = crypto.createHash('md5');
-    const md5_password = md5.update(password + salt).digest('hex');
-    
-    
+    const { phone } = ctx.request.body.data;
+    ctx.validate(createRule, ctx.request.body.data);
+    const checkSame = await ctx.service.user.getUserInfo({ phone }, [ 'id' ]);
+    console.log(checkSame);
+    if (checkSame.length !== 0) {
+      ctx.body = {
+        status: 0,
+        message: '该手机号已经被注册！',
+      };
+    } else {
+      ctx.body = {
+        status: 1,
+        message: '注册成功！请等待审核',
+        data: {
+          id: await ctx.service.user.createUserInfo(ctx.request.body.data),
+        },
+      };
+    }
   }
 }
 
