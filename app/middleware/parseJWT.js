@@ -2,7 +2,6 @@
 const jwt = require('jsonwebtoken');
 module.exports = () => {
   return async function parseJWT(ctx, next) {
-    await next();
     // console.log(ctx.headers);
     const token = ctx.headers.authorization;
     // console.log(t);
@@ -15,9 +14,13 @@ module.exports = () => {
             message: '身份认证出错,请重新登录',
           };
         } else {
+          // ctx.header.auth = decode;
+          // ctx.set('auth', decode);
           ctx.request.body.authorization = decode;
+          // console.log(decode);
         }
       });
+      next();
     } else {
       ctx.body = {
         status: 0,

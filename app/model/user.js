@@ -1,5 +1,3 @@
-
-
 module.exports = app => {
   const { STRING, INTEGER, DATE, ENUM, NOW } = app.Sequelize;
 

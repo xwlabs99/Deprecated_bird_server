@@ -1,0 +1,19 @@
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    const { INTEGER, STRING, ENUM } = Sequelize;
+    await queryInterface.createTable('authoritys', {
+      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      authority_name: { type: STRING },
+      table_name: STRING,
+      opetation: ENUM('READ', 'UPDATE', 'CREATE', 'DELETE'),
+      extra: INTEGER,
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
+    });
+  },
+
+  down: async queryInterface => {
+    queryInterface.dropTable('authoritys');
+  },
+};

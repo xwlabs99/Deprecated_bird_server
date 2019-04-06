@@ -20,7 +20,7 @@ class LoginController extends Controller {
       phone,
       password,
     });
-    const [ userInfo ] = await ctx.service.user.getUserInfo({ id: loginInfo.userinfo_id }, [ 'id', 'phone', 'phone_for_message', 'status', 'user_type', 'bar_id' ]);
+    const [ userInfo ] = await ctx.service.user.getUserInfo({ id: loginInfo.userinfo_id }, [ 'id', 'username', 'phone', 'phone_for_message', 'status', 'user_type', 'bar_id' ]);
     const token = jwt.sign(userInfo, this.app.config.jwtKey);
 
     if (loginInfo === null) {
@@ -63,6 +63,23 @@ class LoginController extends Controller {
         },
       };
     }
+  }
+  async loginByJWT() {
+    const ctx = this.ctx;
+    const { jwt } = ctx.queries;
+    jwt.verify(jwt, ctx.app.config.jwtKey, (err, decode) => {
+      if (err) {
+        ctx.body = {
+          status: 0,
+          message: '身份认证出错,请重新登录',
+        };
+      } else {
+        ctx.body = {
+          status: 1,
+          message: '登录成功',
+        };
+      }
+    });
   }
 }
 

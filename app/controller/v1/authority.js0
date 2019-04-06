@@ -1,0 +1,52 @@
+const Controller = require('egg').Controller;
+/*
+authority_name: STRING(30),
+table_name: STRING(20),
+opetation: ENUM('READ', 'UPDATE', 'CREATE', 'DELETE'),
+extra: INTEGER,
+*/
+class C extends Controller {
+  // POST
+  async create() {
+    const ctx = this.ctx;
+    const id = await ctx.model.Authority.create(ctx.request.body.data);
+    ctx.body = {
+      status: 1,
+      data: id,
+    };
+  }
+  async show() {
+    const ctx = this.ctx;
+    console.log(ctx.queries);
+    if (ctx.queries) {
+      const data = await ctx.model.Authority.findAll({ where: ctx.queries });
+      ctx.body = {
+        status: 1,
+        data,
+      };
+    } else {
+      const data = await ctx.model.Authority.findAll();
+      ctx.body = {
+        status: 1,
+        data,
+      };
+    }
+
+  }
+  // PUT
+  async update() {
+    const ctx = this.ctx;
+    const data = await ctx.model.Authority.update(ctx.request.body.data.newInfo, { where: ctx.request.body.data.filter });
+    ctx.body = {
+      status: 1,
+      data,
+    };
+  }
+  async destroy() {
+    // const ctx = this.ctx;
+    // const data = await ctx.model.Authority.
+  }
+
+}
+
+module.exports = C;

@@ -1,0 +1,16 @@
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    const { INTEGER } = Sequelize;
+    await queryInterface.createTable('user_roles', {
+      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      user_id: { type: INTEGER },
+      role_id: { type: INTEGER },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
+    });
+  },
+
+  down: async queryInterface => {
+    queryInterface.dropTable('user_role');
+  },
+};
