@@ -6,8 +6,8 @@ module.exports = app => {
   const { router, controller } = app;
   // app.once('server', app.wechat.init);
   router.get('/', controller.home.index);
-  router.get('/api', controller.home.index);
-
+  router.post('/', controller.home.post);
+  // router.post('/api/v1/upload', controller.v1.upload.singleUpload);
   const resource = (url, controller) => {
     router.get(url, controller.show);
     router.post(url, controller.create);
@@ -21,7 +21,7 @@ module.exports = app => {
 
   resource('/api/v1/user', controller.v1.user);
   resource('/api/v1/bar', controller.v1.bar);
-
+  resource('/api/v1/image', controller.v1.image);
 
   // router.resources('authoritys', '/api/v1/authority', controller.v1.authority);
   // router.resources('roles', '/api/v1/role', controller.v1.role);

@@ -13,7 +13,7 @@ class HomeController extends Controller {
   async post() {
     const { ctx } = this;
     console.log(ctx.request.body);
-    ctx.body = 'hello';
+    ctx.body = ctx.request.body;
   }
 }
 

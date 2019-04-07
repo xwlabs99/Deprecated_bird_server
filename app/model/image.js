@@ -10,7 +10,8 @@ module.exports = app => {
     key2: STRING(20),
     value2: STRING(20),
     path: STRING(100),
-    create_time: { type: DATE, defaultValue: NOW },
+    filename: STRING(50),
+    created_time: { type: DATE, defaultValue: NOW },
   });
 
   return Photo;

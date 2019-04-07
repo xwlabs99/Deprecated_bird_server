@@ -16,3 +16,8 @@ exports.validate = {
   enable: true,
   package: 'egg-validate',
 };
+
+exports.cors = {
+  enable: false,
+  package: 'egg-cors',
+};

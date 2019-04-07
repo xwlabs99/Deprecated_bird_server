@@ -17,6 +17,7 @@ module.exports = {
       key2: STRING(20),
       value2: STRING(20),
       path: STRING(100),
+      filename: STRING(50),
       created_time: { type: DATE, defaultValue: NOW },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,

@@ -15,7 +15,7 @@ class ImageService extends Service {
       where: { ...filter },
     });
     // console.log(userInfo);
-    return imageInfo.map(item => item.dataValues);
+    return imageInfo;
   }
   async updateImageInfo(filter, attributesObject) {
     const ctx = this.ctx;

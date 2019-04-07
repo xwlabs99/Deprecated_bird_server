@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = () => {
   return async function parseJWT(ctx, next) {
     // console.log(ctx.headers);
+    await next();
     const token = ctx.headers.authorization;
     // console.log(t);
     if (token) {
@@ -17,7 +18,6 @@ module.exports = () => {
           // ctx.header.auth = decode;
           // ctx.set('auth', decode);
           ctx.request.body.authorization = decode;
-          next();
           // console.log(decode);
         }
       });

@@ -15,32 +15,32 @@ class LoginController extends Controller {
   async login() {
     const ctx = this.ctx;
     const { phone } = ctx.request.body.data;
-    console.log('h1')
-    console.log(ctx.request.body);
     const password = ctx.helper.md5(ctx.request.body.data.password);
     const loginInfo = await ctx.service.login.getLoginInfo({
       phone,
       password,
     });
-    const [ userInfo ] = await ctx.service.user.getUserInfo({ id: loginInfo.userinfo_id }, [ 'id', 'username', 'phone', 'phone_for_message', 'status', 'user_type', 'bar_id' ]);
-    const token = jwt.sign(userInfo, this.app.config.jwtKey);
 
     if (loginInfo === null) {
       ctx.body = {
         status: 0,
         message: '用户名或密码错误',
       };
-    } else if (userInfo.status === '审核中') {
-      ctx.body = {
-        status: 0,
-        message: '账号正在审核中',
-      };
     } else {
-      ctx.body = {
-        status: 1,
-        message: '登录成功',
-        data: { token },
-      };
+      const [ userInfo ] = await ctx.service.user.getUserInfo({ id: loginInfo.userinfo_id }, [ 'id', 'username', 'phone', 'phone_for_message', 'status', 'user_type', 'bar_id' ]);
+      const token = jwt.sign(userInfo, this.app.config.jwtKey);
+      if (userInfo.status === '审核中') {
+        ctx.body = {
+          status: 0,
+          message: '账号正在审核中',
+        };
+      } else {
+        ctx.body = {
+          status: 1,
+          message: '登录成功',
+          data: { token, ...userInfo },
+        };
+      }
     }
     // 登录
   }
@@ -68,7 +68,7 @@ class LoginController extends Controller {
   }
   async loginByJWT() {
     const ctx = this.ctx;
-    //console.log(ctx.query);
+    // console.log(ctx.query);
     jwt.verify(ctx.query.jwt, ctx.app.config.jwtKey, (err, decode) => {
       if (err) {
         ctx.body = {
