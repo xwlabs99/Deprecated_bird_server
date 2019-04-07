@@ -3,8 +3,11 @@
 module.exports = () => {
   return async function checkAuthority(ctx, next) {
     // console.log('tes');
-    // console.log(ctx.request.body);
-    next();
+    // console.log(ctx.request.body);\
+    await next();
+    //console.log(ctx.queries);
+    //console.log(ctx.request.body);
+
     // console.log(ctx.request.headers);
     // const method = ctx.request.method;
     // const url = ctx.request.url;

@@ -16,7 +16,7 @@ module.exports = app => {
   };
 
   router.post('/login', controller.v1.login.login);
-  router.get('/loginjwt', controller.v1.login.loginByJWT);
+  router.get('/loginbyjwt', controller.v1.login.loginByJWT);
   router.post('/register', controller.v1.login.register);
 
   resource('/api/v1/user', controller.v1.user);

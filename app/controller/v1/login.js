@@ -15,6 +15,8 @@ class LoginController extends Controller {
   async login() {
     const ctx = this.ctx;
     const { phone } = ctx.request.body.data;
+    console.log('h1')
+    console.log(ctx.request.body);
     const password = ctx.helper.md5(ctx.request.body.data.password);
     const loginInfo = await ctx.service.login.getLoginInfo({
       phone,
@@ -66,8 +68,8 @@ class LoginController extends Controller {
   }
   async loginByJWT() {
     const ctx = this.ctx;
-    const { jwt } = ctx.queries;
-    jwt.verify(jwt, ctx.app.config.jwtKey, (err, decode) => {
+    //console.log(ctx.query);
+    jwt.verify(ctx.query.jwt, ctx.app.config.jwtKey, (err, decode) => {
       if (err) {
         ctx.body = {
           status: 0,

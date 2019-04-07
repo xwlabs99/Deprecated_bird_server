@@ -17,10 +17,11 @@ module.exports = () => {
           // ctx.header.auth = decode;
           // ctx.set('auth', decode);
           ctx.request.body.authorization = decode;
+          next();
           // console.log(decode);
         }
       });
-      next();
+      
     } else {
       ctx.body = {
         status: 0,
