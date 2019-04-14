@@ -3,9 +3,9 @@ const Service = require('egg').Service;
 class BarService extends Service {
   async createBarInfo(body) {
     const ctx = this.ctx;
-    const { bar_name, location, tips, type } = body;
+    const { bar_name, province, city, area, tips, type } = body;
     const status = '未开放';
-    const bar = await ctx.model.Bar.create({ bar_name, location, tips, type, status });
+    const bar = await ctx.model.Bar.create({ bar_name, province, city, area, tips, type, status });
     // console.log(user.dataValues.id);
     return bar.dataValues.id;
   }

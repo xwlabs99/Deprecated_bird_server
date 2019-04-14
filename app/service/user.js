@@ -34,6 +34,9 @@ class UserService extends Service {
   }
   async updateUserInfo(filter, attributesObject) {
     const ctx = this.ctx;
+    if (attributesObject === {}) {
+      return;
+    }
     const update = await ctx.model.User.update(attributesObject, { where: filter });
     return update;
     // [ changedId ]

@@ -4,7 +4,6 @@ class PackageService extends Service {
   async createPackageInfo(body) {
     const ctx = this.ctx;
     const packageInfo = await ctx.model.Package.create({ ...body });
-    // console.log(user.dataValues.id);
     return packageInfo.dataValues.id;
   }
   //  根据特定属性 filter:object attributes:array

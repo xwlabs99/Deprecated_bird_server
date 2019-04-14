@@ -10,7 +10,8 @@ class ImageController extends Controller {
     // 图片上传特殊处理
     const ctx = this.ctx;
     const file = ctx.request.files[0];
-    const fileName = ctx.request.body.filename;
+    // console.log(ctx.request.body);
+    const fileName = ctx.helper.hashid.encode(ctx.request.body.filename);
     const { key1 = '', key2 = '', value1 = '', value2 = '' } = ctx.request.body;
     // console.log(this.config.baseDir);
     // console.log(ctx.request.body);
@@ -34,7 +35,7 @@ class ImageController extends Controller {
     const old = await ctx.service.image.getImageInfo({
       filename,
     });
-    console.log(old);
+    // console.log(old);
     if (old) {
       ctx.body = {
         status: 0,
@@ -62,10 +63,9 @@ class ImageController extends Controller {
   // GET
   async show() {
     const ctx = this.ctx;
-    const attributesArray = ctx.queries.attributes || [];
-    delete ctx.queries.attributes;// 去掉queries属性
-    const filter = { ...ctx.queries };
-    const data = await ctx.service.user.getImageInfo(filter, attributesArray);
+    const attributesArray = ctx.request.body.data.attributes;
+    const filter = ctx.request.body.data.filter;
+    const data = await ctx.service.image.getImageInfo(filter, attributesArray);
     ctx.body = {
       status: data.length === 0 ? 0 : 1,
       message: data.length === 0 ? '没有符合条件的信息' : '',

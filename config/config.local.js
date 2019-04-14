@@ -1,29 +1,36 @@
-
+const path = require('path');
 module.exports = appInfo => {
 
   const config = {};
   config.keys = appInfo.name + '_1550213086228_1468';
   config.jwtKey = 'weixiang1999';
+  config.hashKey = 'weixiang1999';
   config.ImagePath = '/public/image/';
   // add your middleware config here
-  config.middleware = [ 'errorHandler' ];
-  // config.middleware = [ 'parseJWT', 'checkAuthority', 'errorHandler' ];
+  // config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'errorHandler', 'parseJWT', 'parseParams', 'limitJwt', 'limitAuthority', 'modifyFilter' ];
   // add your user config here
   config.parseJWT = {
     match: '/api/v1',
   };
-
-  config.checkAuthority = {
+  config.parseParams = {
     match: '/api/v1',
   };
+  config.limitAuthority = {
+    match: '/api/v1',
+  };
+  config.limitJwt = {
+    match: '/api/v1',
+  };
+  config.modifyFilter = {
+    match: '/api/v1',
+  };
+
   config.security = {
     csrf: {
       enable: false,
       ignoreJSON: true, // 默认为 false，当设置为 true 时，将会放过所有 content-type 为 `application/json` 的请求
     },
-  };
-  config.cors = {
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
   config.multipart = {
     whitelist: [
@@ -31,7 +38,13 @@ module.exports = appInfo => {
       '.jpeg',
     ],
     mode: 'file',
+    // fileSize: '50mb',
   };
+  config.static = {
+    prefix: '/public',
+    dir: path.join(appInfo.baseDir, 'public/'),
+  };
+
   const userConfig = {
     sequelize: {
       dialect: 'mysql',

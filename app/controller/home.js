@@ -3,11 +3,8 @@ const Controller = require('egg').Controller;
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    // const attributesArray = ctx.queries.attributes || [];
-    // delete ctx.queries.attributes;// 去掉queries属性
-    // const filter = { ...ctx.queries };
-    // console.log(ctx.request.body);
-    // ctx.app.wechat.friends.add();
+    // const message = ctx.query.message;
+    // const wechat = this.app.Wechat.
     ctx.body = ctx.request.body;
   }
   async post() {

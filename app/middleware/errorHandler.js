@@ -20,6 +20,13 @@ module.exports = () => {
           error: err.errors,
         };
         ctx.status = status;
+      } else if (status === 403) {
+        ctx.body = {
+          status: 0,
+          message: '你无权进行此操作',
+          error_code: 403,
+        };
+        ctx.status = status;
       } else {
         ctx.body = {
           status: 0,

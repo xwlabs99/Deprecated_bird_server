@@ -1,22 +1,15 @@
-/**
- *6．图片数据表
-（1）主键ID id
-（2）图片分类信息1 key1（门面/套餐等）
-（3）信息1对应值 value1
-（4）图片分类信息2 key2
-（5）信息2对应值 value2
-（6）图片名称/路径 path
- */
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const { INTEGER, STRING, DATE, NOW } = Sequelize;
+    const { INTEGER, STRING, DATE, NOW, ENUM } = Sequelize;
     await queryInterface.createTable('announcements', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      barid: { type: INTEGER },
+      status: ENUM('正常', '已停用'),
+      bar_id: { type: INTEGER },
+      visible_user_type: ENUM('门店客服', '销售员', '所有人'),
       content: { type: STRING(100) },
       creater_id: { type: INTEGER },
       created_time: { type: DATE, defaultValue: NOW },
-      updated_time: { type: DATE, defaultValue: NOW },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,
     });

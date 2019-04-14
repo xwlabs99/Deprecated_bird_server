@@ -14,6 +14,8 @@ const createRule = {
   phone: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/ },
   phone_for_message: { type: 'string', format: /^[1][3,4,5,7,8][0-9]{9}$/ },
   idcard: { type: 'string', max: 18, min: 18 },
+  idcard_photo_id_0: 'int',
+  idcard_photo_id_1: 'int',
   user_type: { type: 'enum', values: [ '管理员', '区域经理', '客服人员', '销售员' ] },
   bar_id: 'string',
 };
@@ -54,9 +56,7 @@ class UserController extends Controller {
   */
   async show() {
     const ctx = this.ctx;
-    const attributesArray = ctx.queries.attributes || [];
-    delete ctx.queries.attributes;// 去掉queries属性
-    const filter = { ...ctx.queries };
+    const { attributes: attributesArray = [], filter = null } = ctx.request.body.data;
     const data = await ctx.service.user.getUserInfo(filter, attributesArray);
     ctx.body = {
       status: 1,
@@ -67,9 +67,8 @@ class UserController extends Controller {
   // PUT
   async update() {
     const ctx = this.ctx;
-    const attributesObject = ctx.body.data.attributes || [];
-    const filter = ctx.body.data.filter;
-    const affectedRows = await ctx.service.user.updateUserinfo(filter, attributesObject);
+    const { attributes: attributesObject = {}, filter = null } = ctx.request.body.data;
+    const affectedRows = await ctx.service.user.updateUserInfo(filter, attributesObject);
 
     if (affectedRows[0] !== 0) {
       ctx.body = { status: 1, message: '修改成功' };
@@ -81,7 +80,7 @@ class UserController extends Controller {
   async destroy() {
     const ctx = this.ctx;
     const attributesObject = { status: '禁止登录' };
-    const filter = ctx.body.data.filter;
+    const filter = ctx.body.data.filter || null;
     const affectedRows = await ctx.service.user.updateUserinfo(filter, attributesObject);
     ctx.body = { status: 1, data: affectedRows };
     ctx.status = 200;
